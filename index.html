@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .action-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .todo-container {
+            background-color: lightgreen; /* Alice Blue */
+            width: 300px;
+            display: block;
+            margin: 20px auto;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            height: 300px;
+            overflow-y: scroll;
+        }
+        
+        .todo-item {
+            background-color: orchid;
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .input-text {
+            border-radius: 20px;
+            border: 1px solid #808080;
+            margin: 5px 20px;
+            font-size: 16px;
+            padding: 8px 15px;
+            
+        }
+        
+        .action-button {
+            background-color: #4682b4; 
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            width: 80px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .action-button:hover {
+            background-color: #4169e1;
+        
+        }
+        .todo-item:hover {
+            background-color: #87ceeb; 
+            transition: background-color 0.3s ease;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="todo-container" id="container">
+    </div>
+    <div class="action-container">
+        <input type="text" id="input" class="input-text">
+        <button  onclick="add()" class="action-button">
+            Add
+        </button>
+    </div>
+
+    <script>
+        let todoList = [] 
+
+        const storage = localStorage.getItem("todoList")
+        if(storage){
+            todoList = JSON.parse(storage)
+            show()
+        }
+
+        function add() {
+            const inputElement = document.getElementById('input')
+            if(inputElement.value.trim() !== "") {
+                todoList.push(inputElement.value)
+                localStorage.setItem("todoList", JSON.stringify(todoList))
+                inputElement.value = ""
+                show()
+            } else {
+                alert("Please enter a valid task!");
+            }
+        }
+
+        function show(){
+            const container = document.getElementById('container')
+            container.innerHTML = ""
+
+            for (const todoItem of todoList) {
+                container.innerHTML += `<div class="todo-item"> <input type="checkbox" > ${todoItem}</div>`
+            }
+        }   
+    </script>
+</body>
+</html>
